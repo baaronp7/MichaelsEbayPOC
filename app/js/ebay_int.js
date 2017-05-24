@@ -12,8 +12,9 @@ exports.getProducts = function(query, maxEntries, page, callback) {
             'SERVICE-VERSION': '1.0.0',
             'RESPONSE-DATA-FORMAT': 'JSON',
             'REST-PAYLOAD': '',
-            keywords: 'paint',
+            keywords: query,
             'paginationInput.entriesPerPage': maxEntries,
+            'paginationInput.pageNumber': page,
             'GLOBAL-ID': 'EBAY-US',
             siteid: '0' 
         },

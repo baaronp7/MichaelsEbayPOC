@@ -14,10 +14,30 @@ var ebay = require("../app/js/ebay_int");
 function reducer(state) { return state; }
 
 router.get('/', function(request, response) {
-    ebay.getProducts("paint", 10, 1, function(data) {
+    var query;
+    var pageSize;
+    var page;
+    
+    if(typeof request.query.q == "undefined")
+        query = "paint";
+    else
+        query = request.query.q;
+    if(typeof request.query.pageSize == "undefined")
+        pageSize = 8;
+    else
+        pageSize = parseInt(request.query.pageSize);
+    if(typeof request.query.page == "undefined")
+        page = 1;
+    else
+        page = parseInt(request.query.page);
+
+    ebay.getProducts(query, pageSize, page, function(data) {
         var initialState = { 
             title: "Michaels Store",
-            products: data
+            products: data,
+            pageSize: pageSize,
+            page: page,
+            pages: parseInt(JSON.parse(data).findItemsByKeywordsResponse[0].paginationOutput[0].totalPages[0])
         };
 
         var store = Redux.createStore(reducer, initialState);

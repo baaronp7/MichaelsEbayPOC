@@ -26956,7 +26956,7 @@
 	var Route = ReactRouter.Route;
 	var Layout = __webpack_require__(251);
 	var Home = __webpack_require__(254);
-	var NotFound = __webpack_require__(255);
+	var NotFound = __webpack_require__(257);
 	var browserHistory = ReactRouter.browserHistory;
 
 	module.exports = React.createElement(
@@ -27786,14 +27786,34 @@
 	var createReactClass = __webpack_require__(252);
 
 	var Index = createReactClass({
+
+	    previous: function () {
+	        if (this.props.custom.page > 1) {
+	            this.props.custom.page -= 1;
+	            var url = window.location.href;
+	            url = url.slice(0, url.lastIndexOf('&'));
+	            window.location = url + "&page=" + this.props.custom.page;
+	        }
+	    },
+
+	    next: function () {
+	        if (this.props.custom.page < this.props.custom.pages) {
+	            this.props.custom.page += 1;
+	            var url = window.location.href;
+	            url = url.slice(0, url.lastIndexOf('&'));
+	            window.location = url + "&page=" + this.props.custom.page;
+	        }
+	    },
+
 	    render: function () {
 	        var custom = this.props.custom;
+	        var products = JSON.parse(custom.products).findItemsByKeywordsResponse[0].searchResult[0].item;
 	        return React.createElement(
 	            'div',
 	            { className: "productContainer" },
-	            JSON.parse(custom.products).findItemsByKeywordsResponse[0].searchResult[0].item.map(product => React.createElement(
+	            products.map(product => React.createElement(
 	                'div',
-	                { key: product.itemId, className: "productTile" },
+	                { key: Math.random(), className: "productTile" },
 	                React.createElement(
 	                    'h2',
 	                    null,
@@ -27806,7 +27826,21 @@
 	                    '$',
 	                    parseFloat(product.sellingStatus[0].currentPrice[0].__value__).toFixed(2)
 	                )
-	            ))
+	            )),
+	            React.createElement(
+	                'div',
+	                { className: "pageController" },
+	                React.createElement(
+	                    'button',
+	                    { className: "pagePrev", onClick: this.previous },
+	                    'Prev'
+	                ),
+	                React.createElement(
+	                    'button',
+	                    { className: "pageNext", onClick: this.next },
+	                    'Next'
+	                )
+	            )
 	        );
 	    }
 	});
@@ -27818,7 +27852,9 @@
 	module.exports = wrapper(Index);
 
 /***/ }),
-/* 255 */
+/* 255 */,
+/* 256 */,
+/* 257 */
 /***/ (function(module, exports) {
 
 	
