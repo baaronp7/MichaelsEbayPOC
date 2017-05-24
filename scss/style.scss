@@ -24,9 +24,18 @@ body {
                 margin-bottom: 10px;
             }
             img {
-                width: 50%;
+                width: auto;
+                min-height: 162px;
                 margin-left: auto;
                 margin-right: auto;
+            }
+            .productPrice {
+                font-size: 14px;
+                text-align: center;
+                font-weight: bold;
+                color: red;
+                padding-top: 23px;
+                margin-top: 0;
             }
         }
     }

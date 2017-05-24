@@ -26954,9 +26954,9 @@
 	var NotFoundRoute = __webpack_require__(214).NotFoundRoute;
 	var Switch = __webpack_require__(214).Switch;
 	var Route = ReactRouter.Route;
-	var Layout = __webpack_require__(256);
-	var Home = __webpack_require__(257);
-	var NotFound = __webpack_require__(258);
+	var Layout = __webpack_require__(251);
+	var Home = __webpack_require__(254);
+	var NotFound = __webpack_require__(255);
 	var browserHistory = ReactRouter.browserHistory;
 
 	module.exports = React.createElement(
@@ -26971,7 +26971,53 @@
 	);
 
 /***/ }),
-/* 251 */,
+/* 251 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	var React = __webpack_require__(181);
+	var Link = __webpack_require__(214).Link;
+	var connect = __webpack_require__(203).connect;
+	var createReactClass = __webpack_require__(252);
+
+	var Layout = createReactClass({
+	    _handleClick: function () {
+	        alert();
+	    },
+	    render: function () {
+	        var custom = this.props.custom;
+	        return React.createElement(
+	            'html',
+	            null,
+	            React.createElement(
+	                'head',
+	                null,
+	                React.createElement(
+	                    'title',
+	                    null,
+	                    custom.title
+	                ),
+	                React.createElement('link', { rel: 'stylesheet', href: '/css/style.css' })
+	            ),
+	            React.createElement(
+	                'body',
+	                null,
+	                this.props.children,
+	                React.createElement('script', { dangerouslySetInnerHTML: {
+	                        __html: 'window.PROPS=' + JSON.stringify(custom)
+	                    } }),
+	                React.createElement('script', { src: '/bundle.js' })
+	            )
+	        );
+	    }
+	});
+
+	var wrapper = connect(function (state) {
+	    return { custom: state };
+	});
+
+	module.exports = wrapper(Layout);
+
+/***/ }),
 /* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -27732,56 +27778,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 254 */,
-/* 255 */,
-/* 256 */
-/***/ (function(module, exports, __webpack_require__) {
-
-	var React = __webpack_require__(181);
-	var Link = __webpack_require__(214).Link;
-	var connect = __webpack_require__(203).connect;
-	var createReactClass = __webpack_require__(252);
-
-	var Layout = createReactClass({
-	    _handleClick: function () {
-	        alert();
-	    },
-	    render: function () {
-	        var custom = this.props.custom;
-	        return React.createElement(
-	            'html',
-	            null,
-	            React.createElement(
-	                'head',
-	                null,
-	                React.createElement(
-	                    'title',
-	                    null,
-	                    custom.title
-	                ),
-	                React.createElement('link', { rel: 'stylesheet', href: '/css/style.css' })
-	            ),
-	            React.createElement(
-	                'body',
-	                null,
-	                this.props.children,
-	                React.createElement('script', { dangerouslySetInnerHTML: {
-	                        __html: 'window.PROPS=' + JSON.stringify(custom)
-	                    } }),
-	                React.createElement('script', { src: '/bundle.js' })
-	            )
-	        );
-	    }
-	});
-
-	var wrapper = connect(function (state) {
-	    return { custom: state };
-	});
-
-	module.exports = wrapper(Layout);
-
-/***/ }),
-/* 257 */
+/* 254 */
 /***/ (function(module, exports, __webpack_require__) {
 
 	var React = __webpack_require__(181);
@@ -27794,15 +27791,21 @@
 	        return React.createElement(
 	            'div',
 	            { className: "productContainer" },
-	            JSON.parse(custom.products).Product.map(product => React.createElement(
+	            JSON.parse(custom.products).findItemsByKeywordsResponse[0].searchResult[0].item.map(product => React.createElement(
 	                'div',
-	                { key: product.ProductID[0].Value, className: "productTile" },
+	                { key: product.itemId, className: "productTile" },
 	                React.createElement(
 	                    'h2',
 	                    null,
-	                    product.Title
+	                    product.title
 	                ),
-	                React.createElement('img', { src: product.StockPhotoURL })
+	                React.createElement('img', { src: product.galleryURL }),
+	                React.createElement(
+	                    'div',
+	                    { className: "productPrice" },
+	                    '$',
+	                    parseFloat(product.sellingStatus[0].currentPrice[0].__value__).toFixed(2)
+	                )
 	            ))
 	        );
 	    }
@@ -27815,7 +27818,7 @@
 	module.exports = wrapper(Index);
 
 /***/ }),
-/* 258 */
+/* 255 */
 /***/ (function(module, exports) {
 
 	
